@@ -15,7 +15,9 @@ Live: https://ketonex.vercel.app
 
 ```
 ketone/
-  index.html            admin UI (login, tabs, search, infinite scroll, pick)
+  index.html            public page: picked upcoming movies only
+  admin.html            admin UI at /admin (login, tabs, search, infinite scroll, pick)
+  vercel.json           routes /admin to admin.html
   favicon.svg           logo
   package.json          required (ES modules + Neon driver)
   schema.sql            run once in Neon
@@ -28,7 +30,7 @@ ketone/
 
 ## How it works
 
-1. Sign in to Ketone with the admin password.
+1. Open `/admin` and sign in with the admin password.
 2. Browse tabs (Hollywood, Hindi, Tamil, Telugu, Malayalam, Kannada, Bengali, Marathi, Punjabi) or search any title.
 3. Tap a poster to pick it. The movie details are saved in Neon.
 4. Tap again to unpick. The row is deleted from the database.
@@ -104,7 +106,7 @@ CREATE INDEX IF NOT EXISTS picks_release_date_idx ON picks (release_date);
 
 4. Add `TMDB_API_KEY`, `ADMIN_PASSWORD` and `ALLOWED_ORIGIN`.
 5. Redeploy so the variables take effect.
-6. Open your Ketone URL and sign in.
+6. Open `/admin` on your Ketone URL and sign in. The root URL shows the public picks page.
 
 ## Connect the main site
 

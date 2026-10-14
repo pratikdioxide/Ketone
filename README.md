@@ -24,8 +24,6 @@ ketone/
     browse.js           browse and search TMDB (admin only)
     admin.js            add and remove picks (admin only)
     picks.js            public API for your main site
-  main-site/
-    index.html          drop-in page for the main website
 ```
 
 ## How it works

@@ -1,16 +1,10 @@
-const RU = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
-const RT = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+import { neon } from '@neondatabase/serverless';
 
-export async function redis(cmd) {
-  if (!RU || !RT) throw new Error('Redis is not connected. Missing env vars.');
-  const r = await fetch(RU, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${RT}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(cmd)
-  });
-  const d = await r.json();
-  if (!r.ok || d.error) throw new Error(d.error || 'Redis error');
-  return d.result;
+const DB_URL = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+export function db() {
+  if (!DB_URL) throw new Error('Database is not connected. Missing DATABASE_URL.');
+  return neon(DB_URL);
 }
 
 export function tmdb(path, params = {}) {

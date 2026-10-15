@@ -25,7 +25,9 @@ export default async function handler(req, res) {
       const c = CATS[req.query.cat];
       if (!c) return res.status(400).json({ error: 'Unknown category' });
       const now = new Date();
-      const end = new Date(now.getTime() + 365 * 864e5);
+      const years = req.query.years === '5' ? 5 : 3; // default 3 years, optional 5
+      const end = new Date(now);
+      end.setUTCFullYear(end.getUTCFullYear() + years);
       const back = new Date(now.getTime() - 120 * 864e5);
       const iso = d => d.toISOString().slice(0, 10);
       r = await tmdb('/discover/movie', {

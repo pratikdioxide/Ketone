@@ -26,6 +26,7 @@ export default async function handler(req, res) {
       if (!c) return res.status(400).json({ error: 'Unknown category' });
       const now = new Date();
       const end = new Date(now.getTime() + 365 * 864e5);
+      const back = new Date(now.getTime() - 120 * 864e5);
       const iso = d => d.toISOString().slice(0, 10);
       r = await tmdb('/discover/movie', {
         region: c.region,
@@ -33,6 +34,8 @@ export default async function handler(req, res) {
         with_release_type: '2|3',
         'release_date.gte': iso(now),
         'release_date.lte': iso(end),
+        // skip old movies re-released in theatres: original release must be recent
+        'primary_release_date.gte': iso(back),
         sort_by: 'popularity.desc',
         include_adult: 'false',
         language: 'en-US',
